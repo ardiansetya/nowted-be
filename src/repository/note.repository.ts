@@ -30,11 +30,12 @@ export const getNoteById = async (noteId: string) => {
 export const updateNoteById = async (
   noteId: string,
   title: string,
-  content: string
+  content: string,
+  folderId: string
 ) => {
   const [updatedNote] = await db
     .update(notes)
-    .set({ title, content })
+    .set({ title, content, folderId })
     .where(eq(notes.id, noteId))
     .returning();
   return updatedNote;

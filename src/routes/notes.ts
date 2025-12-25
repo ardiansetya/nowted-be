@@ -1,7 +1,8 @@
 import { authMiddleware } from "@/middlewares/authMiddleware";
-import { getNotesByUserId, insertNote } from "@/repository/note.repository";
+import { deleteNoteById, getNotesByUserId, insertNote, updateNoteById } from "@/repository/note.repository";
 import { HonoEnv } from "@/types/hono";
 import { createNoteValidator } from "@/validators/createNoteValidator";
+import { updateNoteValidator } from "@/validators/updateNoteValidator";
 import { Hono } from "hono";
 
 export const notes = new Hono<HonoEnv>();
@@ -37,6 +38,33 @@ notes.post("/", createNoteValidator, async (c) => {
   }
 });
 
-notes.patch("/", async (c) => {
+notes.patch("/:id", updateNoteValidator, async (c) => {
+    const id = c.req.param("id");
+    const updateNoteData = await c.req.json();
+    console.log(updateNoteData);
 
+    try {
+        const updatedNote = await updateNoteById(
+            id,
+            updateNoteData.title,
+            updateNoteData.content,
+            updateNoteData.folderId            
+        );
+        return c.json(updatedNote, 200);
+    } catch (error) {
+        console.error("Error updating note:", error);
+        return c.json({ error: "Failed to update note" }, 500);
+    }
+})
+
+notes.delete("/:id", async (c) => {
+    const id = c.req.param("id");
+
+    try {
+        await deleteNoteById(id);
+        return c.json({ message: "Note deleted successfully" }, 200);
+    } catch (error) {
+        console.error("Error deleting note:", error);
+        return c.json({ error: "Failed to delete note" }, 500);
+    }
 })

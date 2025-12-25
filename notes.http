@@ -9,3 +9,17 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/api/notes
+
+
+###
+PATCH http://localhost:3000/api/notes/7eeff40d-6b89-4b94-a712-6511291f31c8
+Content-Type: application/json
+
+{
+    "title": "kontol",
+    "content": "anjay kontol memek",
+    "folderId": "d692e25c-e815-4f1f-825f-e7635a5e0414"
+}
+
+###
+DELETE http://localhost:3000/api/notes/7eeff40d-6b89-4b94-a712-6511291f31c8

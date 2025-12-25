@@ -1,5 +1,5 @@
-import { getNotesByUserId, insertNote } from "@/db/queries";
 import { authMiddleware } from "@/middlewares/authMiddleware";
+import { getNotesByUserId, insertNote } from "@/repository/note.repository";
 import { HonoEnv } from "@/types/hono";
 import { createNoteValidator } from "@/validators/createNoteValidator";
 import { Hono } from "hono";
@@ -36,3 +36,7 @@ notes.post("/", createNoteValidator, async (c) => {
     return c.json({ error: "Failed to create note" }, 500);
   }
 });
+
+notes.patch("/", async (c) => {
+
+})

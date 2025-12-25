@@ -1,10 +1,11 @@
-import { Hono } from 'hono'
-import { cors } from 'hono/cors';
-import { logger } from 'hono/logger';
-import { auth } from './lib/auth';
-import { notes } from './routes/notes';
+import { Hono } from "hono";
+import { cors } from "hono/cors";
+import { logger } from "hono/logger";
+import { auth } from "./lib/auth";
+import { folder } from "./routes/folder";
+import { notes } from "./routes/notes";
 
-const app = new Hono()
+const app = new Hono();
 
 app.use(logger());
 
@@ -23,8 +24,9 @@ app
     (c) => auth.handler(c.req.raw)
   )
   .route("/api/notes", notes)
+  .route("/api/folder", folder)
   .get("/", (c) => {
     return c.text("Hello Hono!");
   });
 
-export default app
+export default app;

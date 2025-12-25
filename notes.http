@@ -1,0 +1,11 @@
+###
+POST http://localhost:3000/api/notes
+Content-Type: application/json
+
+{
+    "title": "Test Note",
+    "content": "This is a test note content."
+}
+
+###
+GET http://localhost:3000/api/notes

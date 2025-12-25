@@ -3,14 +3,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev:client": "cd client && vite --port 3000",
-    "dev:server": "cd telegram-bot && bun run --hot src/index.ts",
+    "dev:client": "cd client && vite --port 3001",
+    "dev:server": "cd server && bun run --hot src/index.ts",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
     "build:client": "cd client && vite build && tsc",
-    "start:server": "cd telegram-bot && bun run src/index.ts",
-    "db:generate": "cd telegram-bot && drizzle-kit generate",
-    "db:migrate": "cd telegram-bot && drizzle-kit migrate",
-    "db:studio": "cd telegram-bot && drizzle-kit studio"
+    "start:server": "cd server && bun run src/index.ts",
+    "db:generate": "cd server && drizzle-kit generate",
+    "db:migrate": "cd server && drizzle-kit migrate",
+    "db:studio": "cd server && drizzle-kit studio",
+    "db:up": "cd server && docker compose up -d",
+    "db:down": "cd server && docker compose down"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.7.6",

@@ -1,13 +1,16 @@
-import { NewFolder, NewNote } from "@/types";
-import { eq } from "drizzle-orm";
+import {  NewNote } from "@/types/note";
+
+import { desc, eq } from "drizzle-orm";
 import { db } from "./db";
 import { folders, notes } from "./schema";
+import { NewFolder } from "@/types/folder";
 
 export const getNotesByUserId = async (userId: string) => {
   const notesList = await db
     .select()
     .from(notes)
-    .where(eq(notes.userId, userId));
+    .where(eq(notes.userId, userId))
+    .orderBy(desc(notes.createdAt));
   return notesList;
 };
 
@@ -39,7 +42,8 @@ export const getFoldersByUserId = async (userId: string) => {
   const foldersList = await db
     .select()
     .from(folders)
-    .where(eq(folders.userId, userId));
+    .where(eq(folders.userId, userId))
+    .orderBy(desc(folders.createdAt));
   return foldersList;
 };
 

@@ -1,5 +1,5 @@
 import { auth } from "@/lib/auth";
-import { HonoEnv } from "@/types";
+import { HonoEnv } from "@/types/hono";
 import { createMiddleware } from "hono/factory";
 
 export const authMiddleware = createMiddleware<HonoEnv>(async (c, next) => {

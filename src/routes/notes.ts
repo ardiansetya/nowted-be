@@ -41,7 +41,6 @@ notes.post("/", createNoteValidator, async (c) => {
 notes.patch("/:id", updateNoteValidator, async (c) => {
     const id = c.req.param("id");
     const updateNoteData = await c.req.json();
-    console.log(updateNoteData);
 
     try {
         const updatedNote = await updateNoteById(

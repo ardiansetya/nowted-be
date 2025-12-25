@@ -8,3 +8,15 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/api/folder
+
+
+###
+PATCH http://localhost:3000/api/folder/4219df3d-d07f-4a9e-97b3-3f15eef9e234
+Content-Type: application/json
+
+{
+    "name": "Belajar"
+}
+
+###
+DELETE http://localhost:3000/api/folder/d692e25c-e815-4f1f-825f-e7635a5e0414

@@ -1,5 +1,10 @@
 import { authMiddleware } from "@/middlewares/authMiddleware";
-import { deleteNoteById, getNotesByUserId, insertNote, updateNoteById } from "@/repository/note.repository";
+import {
+  deleteNoteById,
+  getNotesByUserId,
+  insertNote,
+  updateNoteById,
+} from "@/repository/note.repository";
 import { HonoEnv } from "@/types/hono";
 import { createNoteValidator } from "@/validators/createNoteValidator";
 import { updateNoteValidator } from "@/validators/updateNoteValidator";
@@ -39,31 +44,31 @@ notes.post("/", createNoteValidator, async (c) => {
 });
 
 notes.patch("/:id", updateNoteValidator, async (c) => {
-    const id = c.req.param("id");
-    const updateNoteData = await c.req.json();
+  const id = c.req.param("id");
+  const updateNoteData = await c.req.json();
 
-    try {
-        const updatedNote = await updateNoteById(
-            id,
-            updateNoteData.title,
-            updateNoteData.content,
-            updateNoteData.folderId            
-        );
-        return c.json(updatedNote, 200);
-    } catch (error) {
-        console.error("Error updating note:", error);
-        return c.json({ error: "Failed to update note" }, 500);
-    }
-})
+  try {
+    const updatedNote = await updateNoteById(
+      id,
+      updateNoteData.title,
+      updateNoteData.content,
+      updateNoteData.folderId
+    );
+    return c.json(updatedNote, 200);
+  } catch (error) {
+    console.error("Error updating note:", error);
+    return c.json({ error: "Failed to update note" }, 500);
+  }
+});
 
 notes.delete("/:id", async (c) => {
-    const id = c.req.param("id");
+  const id = c.req.param("id");
 
-    try {
-        await deleteNoteById(id);
-        return c.json({ message: "Note deleted successfully" }, 200);
-    } catch (error) {
-        console.error("Error deleting note:", error);
-        return c.json({ error: "Failed to delete note" }, 500);
-    }
-})
+  try {
+    await deleteNoteById(id);
+    return c.json({ message: "Note deleted successfully" }, 200);
+  } catch (error) {
+    console.error("Error deleting note:", error);
+    return c.json({ error: "Failed to delete note" }, 500);
+  }
+});

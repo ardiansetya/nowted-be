@@ -6,7 +6,6 @@ import { folder } from "./routes/folder";
 import { notes } from "./routes/notes";
 
 const app = new Hono()
-
   .use( '*', logger())
   .use(
     cors({
@@ -17,12 +16,13 @@ const app = new Hono()
       credentials: true,
     })
   )
+  .get("/", (c) => {
+    return c.text("Hello Hono!");
+  })
   .route("/api/auth", authRoute)
   .route("/api/notes", notes)
   .route("/api/folder", folder)
-  .get("/", (c) => {
-    return c.text("Hello Hono!");
-  });
+  
 
 export type AppType = typeof app;
 export default app;

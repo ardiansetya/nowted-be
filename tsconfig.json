@@ -8,6 +8,7 @@
     "paths": {
       "@/*": ["server/*"],
       "@client/*": ["client/src/*"]
-    }
+    },
+    "composite": true
   }
 }

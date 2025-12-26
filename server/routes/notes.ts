@@ -10,11 +10,9 @@ import { createNoteValidator } from "@/validators/createNoteValidator";
 import { updateNoteValidator } from "@/validators/updateNoteValidator";
 import { Hono } from "hono";
 
-export const notes = new Hono<HonoEnv>();
-
-notes.use(authMiddleware);
-
-notes.get("/", async (c) => {
+export const notes = new Hono<HonoEnv>()
+.use(authMiddleware)
+.get("/", async (c) => {
   const user = c.get("user");
 
   try {
@@ -24,9 +22,9 @@ notes.get("/", async (c) => {
     console.error("Error fetching notes:", error);
     return c.json({ error: "Failed to fetch notes" }, 500);
   }
-});
+})
 
-notes.post("/", createNoteValidator, async (c) => {
+.post("/", createNoteValidator, async (c) => {
   const user = c.get("user");
 
   const newNoteData = await c.req.json();
@@ -41,9 +39,8 @@ notes.post("/", createNoteValidator, async (c) => {
     console.error("Error creating note:", error);
     return c.json({ error: "Failed to create note" }, 500);
   }
-});
-
-notes.patch("/:id", updateNoteValidator, async (c) => {
+})
+.patch("/:id", updateNoteValidator, async (c) => {
   const id = c.req.param("id");
   const updateNoteData = await c.req.json();
 
@@ -59,9 +56,8 @@ notes.patch("/:id", updateNoteValidator, async (c) => {
     console.error("Error updating note:", error);
     return c.json({ error: "Failed to update note" }, 500);
   }
-});
-
-notes.delete("/:id", async (c) => {
+})
+.delete("/:id", async (c) => {
   const id = c.req.param("id");
 
   try {

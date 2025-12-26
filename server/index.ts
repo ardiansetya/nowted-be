@@ -9,7 +9,7 @@ const app = new Hono()
   .use( '*', logger())
   .use(
     cors({
-      origin: "http://localhost:3001",
+      origin: "http://localhost:5173",
       allowHeaders: ["Content-Type", "Authorization"],
       allowMethods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
       exposeHeaders: ["Content-Length"],

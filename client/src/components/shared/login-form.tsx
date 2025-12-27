@@ -19,6 +19,7 @@ import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { signInSchema } from "@/validators/signInSchema";
 import { useForm } from "@tanstack/react-form";
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -28,8 +29,15 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   const [isLoading, setIsLoading] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+
+  const handlePasswordToggle = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+
   const form = useForm({
     defaultValues: {
       email: "",
@@ -117,10 +125,11 @@ export function LoginForm({
                           id={field.name}
                           name={field.name}
                           value={field.state.value}
+                          type="email"
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
                           aria-invalid={isInvalid}
-                          placeholder="Login button not working on mobile"
+                          placeholder="Your email address"
                           autoComplete="off"
                         />
 
@@ -139,16 +148,34 @@ export function LoginForm({
                     return (
                       <Field data-invalid={isInvalid}>
                         <FieldLabel htmlFor={field.name}>Password</FieldLabel>
-                        <Input
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          aria-invalid={isInvalid}
-                          placeholder="Login button not working on mobile"
-                          autoComplete="off"
-                        />
+                        <div className="relative">
+                          <Input
+                            id={field.name}
+                            name={field.name}
+                            value={field.state.value}
+                            type={isPasswordVisible ? "text" : "password"}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            aria-invalid={isInvalid}
+                            placeholder="**********"
+                            autoComplete="off"
+                          />
+                          <div className="absolute top-1 right-2">
+                            <Button
+                              onClick={handlePasswordToggle}
+                              size={"icon-sm"}
+                              variant={"link"}
+                              type="button">
+                                {
+                                  isPasswordVisible ? (
+                                    <Eye />
+                                  ) : (
+                                    <EyeOff/>
+                                  )
+                                }
+                            </Button>
+                          </div>
+                        </div>
 
                         {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
@@ -159,8 +186,14 @@ export function LoginForm({
                 />
               </FieldGroup>
               <Field>
-                {error && <FieldDescription className="text-center w-full text-destructive">{error}</FieldDescription>}
-                <Button type="submit">{isLoading ? "Loading..." : "Login"}</Button>
+                {error && (
+                  <FieldDescription className="text-center w-full text-destructive">
+                    {error}
+                  </FieldDescription>
+                )}
+                <Button type="submit">
+                  {isLoading ? "Loading..." : "Login"}
+                </Button>
                 <FieldDescription className="text-center">
                   Don&apos;t have an account? <Link to="/sign-up">Sign up</Link>
                 </FieldDescription>

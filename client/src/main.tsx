@@ -9,12 +9,13 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 import SignIn from "./pages/SignIn";
 import RootLayout from "./layouts/RootLayout";
+import SignUp from "./pages/SignUp";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
-    element: <RootLayout />, // 👈 GLOBAL
-    errorElement: <div>Something went wrong!</div>,
+    element: <RootLayout />,
+    errorElement: <div className="min-h-screen flex justify-center items-center">Something went wrong!</div>,
     children: [
       {
         path: "/",
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/sign-in",
         element: <SignIn />,
+      },
+      {
+        path: "/sign-up",
+        element: <SignUp />,
       },
     ],
   },

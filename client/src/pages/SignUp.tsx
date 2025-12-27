@@ -1,7 +1,7 @@
-import { LoginForm } from "@/components/shared/LoginForm";
+import { RegisterForm } from "@/components/shared/SignupForm";
 import { Notebook } from "lucide-react";
 
-const SignIn = () => {
+const SignUp = () => {
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
@@ -11,10 +11,10 @@ const SignIn = () => {
           </div>
           Nowted.
         </a>
-        <LoginForm />
+        <RegisterForm />
       </div>
     </div>
   );
 };
 
-export default SignIn;
+export default SignUp;

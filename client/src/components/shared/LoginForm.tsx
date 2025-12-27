@@ -47,29 +47,24 @@ export function LoginForm({
       onSubmit: signInSchema,
     },
     onSubmit: async ({ value }) => {
-      try {
+      authClient.signIn.email({
+        email: value.email,
+        password: value.password,
+        callbackURL: "/",
+      },
+    {
+      onError: (error) => {
+        setError(error.error.message);
+      },
+      onRequest: () => {
         setIsLoading(true);
-        const user = await authClient.signIn.email({
-          email: value.email,
-          password: value.password,
-        });
-
-        if (user.error?.message) {
-          navigate("/sign-in");
-          setError(user.error.message);
-          setIsLoading(false);
-          throw new Error(user.error.message);
-        }
-
+      },
+      onSuccess: () => {
         toast.success("Logged in successfully");
         navigate("/");
-        setIsLoading(false);
-      } catch (error) {
-        const errorMessage =
-          error instanceof Error ? error.message : "An error occurred";
-        setError(errorMessage);
-        setIsLoading(false);
-      }
+      },
+    }
+    );
     },
   });
   return (

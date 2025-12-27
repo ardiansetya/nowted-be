@@ -4,6 +4,9 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { openAPI } from "better-auth/plugins";
 
 export const auth = betterAuth({
+  baseURL: process.env.BETTER_AUTH_URL,
+  secret: process.env.BETTER_AUTH_SECRET,
+  trustedOrigins: ["http://localhost:5173"],
   plugins: [openAPI()],
   emailVerification: {
     sendVerificationEmail: async ({ user, url, token }) => {

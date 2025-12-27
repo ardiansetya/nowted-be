@@ -129,6 +129,14 @@ export const notesRelations = relations(notes, ({ one }) => ({
   }),
 }));
 
+export const folderRelations = relations(folders, ({ one, many }) => ({
+  user: one(user, {
+    fields: [folders.userId],
+    references: [user.id],
+  }),
+  notes: many(notes),
+}));
+
 export const sessionRelations = relations(session, ({ one }) => ({
   user: one(user, {
     fields: [session.userId],

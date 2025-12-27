@@ -6,10 +6,10 @@ import { folder } from "./routes/folder";
 import { notes } from "./routes/notes";
 
 const app = new Hono()
-  .use( '*', logger())
+  .use("*", logger())
   .use(
     cors({
-      origin: "http://localhost:5173",
+      origin: ["http://localhost:3000", "http://localhost:5173"],
       allowHeaders: ["Content-Type", "Authorization"],
       allowMethods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
       exposeHeaders: ["Content-Length"],
@@ -21,8 +21,10 @@ const app = new Hono()
   })
   .route("/api/auth", authRoute)
   .route("/api/notes", notes)
-  .route("/api/folder", folder)
-  
+  .route("/api/folder", folder);
 
 export type AppType = typeof app;
-export default app;
+export default {
+  fetch: app.fetch,
+  port: 3000,
+};

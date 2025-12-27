@@ -8,26 +8,32 @@ import "./index.css";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 import SignIn from "./pages/SignIn";
+import RootLayout from "./layouts/RootLayout";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <DashboardLayout />,
+    element: <RootLayout />, // 👈 GLOBAL
     errorElement: <div>Something went wrong!</div>,
     children: [
       {
-        index: true,
-        element: <Dashboard />,
+        path: "/",
+        element: <DashboardLayout />,
+        children: [
+          {
+            index: true,
+            element: <Dashboard />,
+          },
+        ],
+      },
+      {
+        path: "/sign-in",
+        element: <SignIn />,
       },
     ],
   },
-  {
-    path: "/sign-in",
-    element: <SignIn />,
-    errorElement: <div>Something went wrong!</div>,
-  },
 ]);
+
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
